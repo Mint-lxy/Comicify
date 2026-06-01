@@ -42,7 +42,14 @@ export const snapPhoto = async b64 => {
     imageData.outputs[id] = result
   } catch (error) {
     console.error('Error generating image:', error)
-    alert(error.message || '生成图片失败，请重试')
+    
+    // Provide a user-friendly error message
+    const errStr = typeof error === 'string' ? error : (error.message || JSON.stringify(error) || '')
+    if (error?.status === 429 || /quota|配额/i.test(errStr) || errStr.includes('429')) {
+      alert('抱歉，当前免费生成额度已耗尽，请稍后再试。')
+    } else {
+      alert('生成图片失败，请稍后重试。')
+    }
     
     // Remove the failed photo from the list
     set(state => {

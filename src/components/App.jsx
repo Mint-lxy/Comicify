@@ -70,18 +70,24 @@ export default function App() {
 
   const startVideo = async () => {
     setDidInitVideo(true)
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {width: {ideal: 1920}, height: {ideal: 1080}},
-      audio: false,
-      facingMode: {ideal: 'user'}
-    })
-    setVideoActive(true)
-    videoRef.current.srcObject = stream
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {width: {ideal: 1920}, height: {ideal: 1080}},
+        audio: false,
+        facingMode: {ideal: 'user'}
+      })
+      setVideoActive(true)
+      videoRef.current.srcObject = stream
 
-    const {width, height} = stream.getVideoTracks()[0].getSettings()
-    const squareSize = Math.min(width, height)
-    canvas.width = squareSize
-    canvas.height = squareSize
+      const {width, height} = stream.getVideoTracks()[0].getSettings()
+      const squareSize = Math.min(width, height)
+      canvas.width = squareSize
+      canvas.height = squareSize
+    } catch (err) {
+      console.error('Video error:', err)
+      setDidInitVideo(false)
+      alert('Camera access denied or unavailable. You can still upload a photo.')
+    }
   }
 
   const takePhoto = () => {
