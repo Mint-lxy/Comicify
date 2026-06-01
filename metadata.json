@@ -1,0 +1,8 @@
+{
+  "name": "Comicify",
+  "description": "Transform your photos into comic book art using AI.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}
