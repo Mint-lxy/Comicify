@@ -64,14 +64,14 @@ export default limitFunction(
           return
         }
 
-        if (attempt === maxRetries - 1) {
+        if (attempt === maxRetries - 1 || error?.status === 429 || /quota|配额/i.test(error?.message || '')) {
           throw error
         }
 
         const delay = baseDelay * 2 ** attempt
         await new Promise(res => setTimeout(res, delay))
         console.warn(
-          `Attempt ${attempt + 1} failed, retrying after ${delay}ms...`
+          `尝试第 ${attempt + 1} 次失败，将在 ${delay} 毫秒后重试……`
         )
       }
     }

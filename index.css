@@ -275,7 +275,7 @@ main {
   right: 0;
   background: var(--secondary-color);
   color: #fff;
-  z-index: 10;
+  z-index: 100;
   font-size: 23px;
   padding: 8px;
   border-radius: 50%;
@@ -410,7 +410,7 @@ main {
   translate: -50% 50%;
   background: var(--primary-color);
   color: #000;
-  z-index: 10;
+  z-index: 100;
 }
 .makeGif {
   position: sticky;
@@ -437,108 +437,23 @@ main {
   100% { transform: translate(-50%, -50%) rotate(-15deg) scale(1.2); }
 }
 
-.bubble {
-  position: absolute;
-  background: #fff;
-  border: 4px solid var(--border-color);
-  border-radius: 40px;
-  padding: 10px 20px;
-  font-family: inherit;
-  font-size: 24px;
-  color: #000;
-  cursor: grab;
-  user-select: none;
-  z-index: 20;
-  white-space: nowrap;
-  box-shadow: 4px 4px 0 var(--border-color);
-  text-align: center;
-}
-.bubble:active {
-  cursor: grabbing;
-}
-.bubble.speech::after, .bubble.thought::after, .bubble.speech::before, .bubble.thought::before {
-  content: "";
-  position: absolute;
-  display: block;
-}
-
-/* Tail base default bottom-left */
-.bubble.speech.tail-bottom-left::after {
-  bottom: -15px; left: 25px; border-width: 15px 15px 0 0; border-style: solid; border-color: #fff transparent transparent transparent; width: 0;
-}
-.bubble.speech.tail-bottom-left::before {
-  bottom: -21px; left: 23px; border-width: 19px 19px 0 0; border-style: solid; border-color: var(--border-color) transparent transparent transparent; width: 0;
-}
-
-/* Tail bottom-right */
-.bubble.speech.tail-bottom-right::after {
-  bottom: -15px; right: 25px; border-width: 15px 0 0 15px; border-style: solid; border-color: #fff transparent transparent transparent; width: 0;
-}
-.bubble.speech.tail-bottom-right::before {
-  bottom: -21px; right: 23px; border-width: 19px 0 0 19px; border-style: solid; border-color: var(--border-color) transparent transparent transparent; width: 0;
-}
-
-/* Tail top-left */
-.bubble.speech.tail-top-left::after {
-  top: -15px; left: 25px; border-width: 0 15px 15px 0; border-style: solid; border-color: transparent transparent #fff transparent; width: 0;
-}
-.bubble.speech.tail-top-left::before {
-  top: -21px; left: 23px; border-width: 0 19px 19px 0; border-style: solid; border-color: transparent transparent var(--border-color) transparent; width: 0;
-}
-
-/* Tail top-right */
-.bubble.speech.tail-top-right::after {
-  top: -15px; right: 25px; border-width: 0 0 15px 15px; border-style: solid; border-color: transparent transparent #fff transparent; width: 0;
-}
-.bubble.speech.tail-top-right::before {
-  top: -21px; right: 23px; border-width: 0 0 19px 19px; border-style: solid; border-color: transparent transparent var(--border-color) transparent; width: 0;
-}
-
-/* Thought tails */
-.bubble.thought.tail-bottom-left::after {
-  bottom: -15px; left: 15px; width: 12px; height: 12px; background: #fff; border: 4px solid var(--border-color); border-radius: 50%; box-shadow: -15px 15px 0 -2px #fff, -15px 15px 0 2px var(--border-color);
-}
-.bubble.thought.tail-bottom-right::after {
-  bottom: -15px; right: 15px; width: 12px; height: 12px; background: #fff; border: 4px solid var(--border-color); border-radius: 50%; box-shadow: 15px 15px 0 -2px #fff, 15px 15px 0 2px var(--border-color);
-}
-.bubble.thought.tail-top-left::after {
-  top: -15px; left: 15px; width: 12px; height: 12px; background: #fff; border: 4px solid var(--border-color); border-radius: 50%; box-shadow: -15px -15px 0 -2px #fff, -15px -15px 0 2px var(--border-color);
-}
-.bubble.thought.tail-top-right::after {
-  top: -15px; right: 15px; width: 12px; height: 12px; background: #fff; border: 4px solid var(--border-color); border-radius: 50%; box-shadow: 15px -15px 0 -2px #fff, 15px -15px 0 2px var(--border-color);
-}
-.bubble.thought::before { display: none !important; }
-
-/* Burst bubble */
-.bubble.burst {
-  border-radius: 0;
-  clip-path: polygon(50% 0%, 65% 25%, 100% 20%, 80% 50%, 100% 80%, 65% 75%, 50% 100%, 35% 75%, 0% 80%, 20% 50%, 0% 20%, 35% 25%);
-  border: none;
-  box-shadow: none;
-  padding: 30px;
-  background: #fff;
-}
 
 .overlayInputContainer {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
   max-width: 400px;
   display: flex;
-  box-shadow: 4px 4px 0 rgba(0,0,0,1);
-  border-radius: 8px;
+  background: #fff;
+  border: 4px solid var(--border-color);
+  padding: 10px;
+  box-shadow: 6px 6px 0 rgba(0,0,0,1);
+  border-radius: 12px;
   z-index: 30;
 }
-.overlayInputContainer input {
-  width: 100%;
-  border: 4px solid var(--border-color);
-  padding: 12px;
-  font-size: 18px;
-  box-shadow: none;
-  text-align: center;
-}
+
 
 .stickerControls {
   position: absolute;
@@ -576,5 +491,17 @@ main {
 }
 .stickerControls button:hover {
   background: #eee;
+}
+
+.stickerButton {
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.stickerButton:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 #000 !important;
+}
+.stickerButton:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000 !important;
 }
 

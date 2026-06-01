@@ -32,19 +32,32 @@ export const snapPhoto = async b64 => {
     state.photos.unshift({id, mode: activeMode, isBusy: true})
   })
 
-  const result = await gen({
-    model,
-    prompt: modes[activeMode].prompt,
-    inputFile: b64
-  })
+  try {
+    const result = await gen({
+      model,
+      prompt: modes[activeMode].prompt,
+      inputFile: b64
+    })
 
-  imageData.outputs[id] = result
-
-  set(state => {
-    state.photos = state.photos.map(photo =>
-      photo.id === id ? {...photo, isBusy: false} : photo
-    )
-  })
+    imageData.outputs[id] = result
+  } catch (error) {
+    console.error('Error generating image:', error)
+    alert(error.message || '生成图片失败，请重试')
+    
+    // Remove the failed photo from the list
+    set(state => {
+      state.photos = state.photos.filter(photo => photo.id !== id)
+    })
+    delete imageData.inputs[id]
+    delete imageData.outputs[id]
+    return
+  } finally {
+    set(state => {
+      state.photos = state.photos.map(photo =>
+        photo.id === id ? {...photo, isBusy: false} : photo
+      )
+    })
+  }
 }
 
 export const deletePhoto = id => {
